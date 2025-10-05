@@ -20,5 +20,8 @@ package net.skinsrestorer.shared.update;
 import net.skinsrestorer.shared.update.model.GitHubAssetInfo;
 
 public interface UpdateDownloader {
-    boolean downloadUpdate(GitHubAssetInfo asset);
+    default boolean downloadUpdate(GitHubAssetInfo asset) {
+        // 更新逻辑已禁用，保持方法签名兼容
+        return false;
+    }
 }

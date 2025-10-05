@@ -26,8 +26,6 @@ import net.skinsrestorer.shared.plugin.SRPlugin;
 import javax.inject.Inject;
 import java.nio.file.Files;
 import java.util.Optional;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
 
 @RequiredArgsConstructor(onConstructor_ = @Inject)
 public class UpdateCheckInit {
@@ -45,15 +43,14 @@ public class UpdateCheckInit {
         }
 
         DownloaderClassProvider downloaderClassProvider = injector.getIfAvailable(DownloaderClassProvider.class);
-        return downloaderClassProvider == null || downloaderDisabled ? Optional.empty() : Optional.of(injector.getSingleton(downloaderClassProvider.get()));
+        return downloaderClassProvider == null || downloaderDisabled
+                ? Optional.empty()
+                : Optional.of(injector.getSingleton(downloaderClassProvider.get()));
     }
 
     public void run(InitCause cause) {
-        UpdateDownloader downloader = getDownloader().orElse(null);
-        updateCheckExecutor.checkUpdate(cause.toUpdateCause(), updateChecker, downloader, true);
-
-        int delayInt = 60 + ThreadLocalRandom.current().nextInt(240 - 60 + 1);
-        adapter.runRepeatAsync(() -> updateCheckExecutor.checkUpdate(UpdateCause.SCHEDULED, updateChecker, downloader, false), delayInt, delayInt, TimeUnit.MINUTES);
+        // 更新检查逻辑已移除
+        logger.debug("[UpdateCheckInit] Update check skipped (disabled logic).");
     }
 
     public enum InitCause {

@@ -30,16 +30,6 @@ public class UpdateCheckExecutor {
     private final SettingsManager settings;
 
     public void checkUpdate(UpdateCause cause, UpdateCheckerGitHub updateChecker, UpdateDownloader downloader, boolean isSync) {
-        if (settings.getProperty(AdvancedConfig.NO_CONNECTIONS)) {
-            updateChecker.printUpToDate(UpdateCause.NETWORK_DISABLED);
-            return;
-        }
-
-        Runnable check = () -> updateChecker.checkForUpdate(cause, downloader);
-        if (isSync) {
-            adapter.runAsync(check);
-        } else {
-            check.run();
-        }
+        // 更新检查逻辑已移除
     }
 }
